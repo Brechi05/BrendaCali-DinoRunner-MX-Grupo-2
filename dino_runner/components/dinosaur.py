@@ -1,30 +1,31 @@
 from dino_runner.utils.constants import JUMPING, RUNNING, DEFAULT_TYPE, DUCKING
 import pygame
+from pygame.sprite import Sprite
 
-class Dinosaur:
+class Dinosaur(Sprite):
     X_POS = 80
     Y_POS = 310
-    JUMP_VEL = 8.5
-    Y_POS_DUCK = 340
-    
+    JUMP_VEL = 8.5   
+    Y_POS_DUCK = 340  #  agachar
+
     def __init__(self):
-        self.run_image = {DEFAULT_TYPE: RUNNING}
-        self.jump_image = {DEFAULT_TYPE: JUMPING}
+        self.run_image = {DEFAULT_TYPE: RUNNING}  # dino run 1 > hace referencia a la imagen
+        self.jump_image = {DEFAULT_TYPE: JUMPING} #
         self.duck_image = {DEFAULT_TYPE: DUCKING}
         self.type = DEFAULT_TYPE
         self.image = self.run_image[self.type][0]
 
         self.dino_rect = self.image.get_rect()
-        self.dino_rect.x = self.X_POS
+        self.dino_rect.x = self.X_POS  # para posicionarlas en el juego
         self.dino_rect.y = self.Y_POS
         self.jump_vel = self.JUMP_VEL
 
-        self.step_index = 0
-        self.dino_run = True
+        self.step_index = 0  # indice de pasos del dino
+        self.dino_run = True  
         self.dino_jump = False
-        self.dino_duck = False
+        self.dino_duck = False   # variable bolleana
 
-    def update(self, user_input):
+    def update(self, user_input): # adei > 
         if self.dino_jump:
             self.jump()
         if self.dino_run:
@@ -44,21 +45,21 @@ class Dinosaur:
             self.dino_jump = False
             self.dino_duck = False
 
-        if self.step_index >= 10:
+        if self.step_index >= 10:     # para actualixzarse
             self.step_index = 0
 
-    def draw(self, screen):
+    def draw(self, screen): #>dibujo para mandar la pantalla
         screen.blit(self.image,(self.dino_rect.x,self.dino_rect.y))
 
     def event(self):
         pass
 
-    def run(self):
-        self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]
+    def run(self): # la imagen va ir cambiando depende la posicion de 0
+        self.image = RUNNING[0] if self.step_index < 5 else RUNNING[1]# si es menor a 5 va tomar la otra imagen
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
-        self.step_index += 1
+        self.step_index += 1 # ir sumando de 1 en 1
 
     def jump(self):
         self.image = self.jump_image[self.type]
@@ -69,8 +70,8 @@ class Dinosaur:
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
 
-    def duck(self):
-        #self.image = DUCKING[0] if self.step_index < 5 else DUCKING[1]
+    def duck(self):    # usamos dos imagenes para sus patitas
+       
         self.image = self.duck_image[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
