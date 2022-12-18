@@ -20,13 +20,23 @@ class ObstacleManager:
                 smallCactus.rect.y = 325
                 self.obstacles.append(smallCactus)
 
-        for obstacle in self.obstacles:
+    for obstacle in self.obstacles:
             obstacle.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacle.rect):# si hubo una colision entonces retorna True
                 pygame.time.delay(500)
                 game.playing = False
                 break
+                game.player_heart_manager.reduce_heart()
 
-    def draw(self, screen):
+                if game.player_heart_manager.heart_count > 0:
+                    self.obstacles.pop()
+                else:
+                    pygame.time.delay(500)
+                    self.obstacles.remove(obstacle)
+                    game.playing = False
+                    game.death_count += 1
+                    break
+
+    def draw(self,screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)
