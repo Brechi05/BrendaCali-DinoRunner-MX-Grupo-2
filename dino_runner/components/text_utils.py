@@ -1,22 +1,48 @@
-from dino_runner.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 import pygame
 
-FONT_STYLE = 'freesansbold.ttf'
-text_black_color = (0, 0, 0) #RGB 
+from dino_runner.utils.constants import  SCREEN_WIDTH
 
-def get_centered_message(message, width = SCREEN_WIDTH // 2, height = SCREEN_HEIGHT // 2):
+FONT_STYLE = "freesansbold.ttf"
+black_color = (0, 0, 0)
+
+
+def get_score_element(point):
+    font = pygame.font.Font(FONT_STYLE, 20)
+    text = font.render("Points: " + str(point), True, black_color)
+    text_rect = text.get_rect()
+    text_rect.center= [950, 40]
+    
+    return text, text_rect
+
+def get_centered_message(message, width = SCREEN_WIDTH // 2, height = SCREEN_WIDTH // 2):
     font = pygame.font.Font(FONT_STYLE, 30)
-
-    text = font.render(message, True, text_black_color)
+    text = font.render(message, True, black_color)
     text_rect = text.get_rect()
     text_rect.center = (width, height)
-    return (text, text_rect)
 
-def get_score_element(points):
-    font = pygame.font.Font(FONT_STYLE, 22)
+    return text, text_rect
 
-    text = font.render('Points: ' + str(points), True, text_black_color)
+def get_dino_elemen():
+    font = pygame.font.Font(FONT_STYLE, 20)
+    text = font.render("Dino : " , True, black_color)
     text_rect = text.get_rect()
-    text_rect.center = (1000, 50)
-    return (text, text_rect)
+    text_rect.center= [550, 250]
+    return  text_rect 
+
+
+def get_number_dead(death):
+    font = pygame.font.Font(FONT_STYLE, 20)
+    text = font.render(" number of deaths : " + str(death), True, black_color)
+    text_rect = text.get_rect()
+    text_rect.center= [550, 450]
+
+    return text, text_rect
+
+def get_game_hover():
+    font = pygame.font.Font(FONT_STYLE, 20)
+    text = font.render("Dino : " ,True, black_color)
+    text_rect = text.get_rect()
+    text_rect.center= [380, 150]
+
+    return  text_rect 
 
